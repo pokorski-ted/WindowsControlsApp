@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WindowsControlsApp
@@ -23,16 +17,21 @@ namespace WindowsControlsApp
         }
 
         ShapeType shp = ShapeType.Rectangle;
+        int X, Y;
 
+        private void ControlsDemoForm_Load(object sender, EventArgs e) 
+        {
+        
+        }
         private void ControlsDemoForm_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             g.TranslateTransform(0, menuStrip1.Height);
 
             if (shp == ShapeType.Rectangle)
-                g.DrawRectangle(Pens.Red, 10, 10, 100, 80);
+                g.DrawRectangle(Pens.Red, X, Y, 100, 80);
             else
-                g.DrawEllipse(Pens.Red, 10, 10, 100, 80);
+                g.DrawEllipse(Pens.Red, X, Y, 100, 80);
         }
 
         private void mnuRectangle_Click(object sender, EventArgs e)
@@ -47,9 +46,26 @@ namespace WindowsControlsApp
             Invalidate();
         }
 
+        private void mnuPosition_Click(object sender, EventArgs e)
+        {
+            PositionDialog dlgPosition = new PositionDialog();
+            dlgPosition.Left = X;
+            dlgPosition.Top = Y;
+
+            if (dlgPosition.ShowDialog() == DialogResult.OK) 
+            {
+            X = dlgPosition.Left;
+            Y = dlgPosition.Top;    
+
+            Invalidate();
+            
+            }
+        }
+
         private void mnuExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
     }
 }
